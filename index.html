@@ -4,12 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Animal Crossing Villager Gallery</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
     <link href="assets\style.css" rel="stylesheet">
-    <link rel="icon" href="images/Junimo_Icon.png" type="image/png">
+    <link rel="icon" href="assets\img\icon.png" type="image/png">
 </head>
 
 <body>
@@ -51,6 +51,26 @@
         </div>
     </div>
 
+    <footer class="text-center text-lg-start mt-4">
+        <div class="text-center p-3">
+            © 2025 Nookipedia
+        </div>
+    </footer>
+
+    <script>
+        const personalityColors = {
+            "big sister": "#F4A6B8",   // strong, friendly pink
+            "cranky": "#C9A26B",       // grumpy brown
+            "jock": "#7ED6C1",         // sporty teal
+            "lazy": "#FFE28A",         // cozy yellow
+            "normal": "#EDE7DF",       // soft neutral
+            "peppy": "#FFB3D9",        // energetic pink
+            "sisterly": "#F4A6B8",     // same as big sister
+            "smug": "#BFD7FF",         // classy blue
+            "snooty": "#D6C6F0"        // elegant lavender
+        };
+    </script>
+
     <script>
         const contentArea = document.getElementById("contentArea");
 
@@ -71,13 +91,13 @@
             const villagers = await response.json();
 
             villagers.slice(0, 50).forEach(v => {
-                contentArea.innerHTML += 
-                `
-                <div class=" col-xs-12 col-md-6 col-lg-4 col-xl-3 p-3  text-center">
-                <div class="card">
+                contentArea.innerHTML +=
+                    `
+                <div class=" col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 p-3  text-center">
+                <div class="card h-100 shadow rounded-3" style="background-color: ${personalityColors[v.personality.toLowerCase()] || '#FFFFFF'};">
                     <h2 class="mt-2">${v.name}</h2>
                     <div class="mx-auto overflow-hidden">
-                        <img src="${v.image_url}" width="auto" height="100" alt="Villager">
+                        <img src="${v.image_url}" width="auto" height="150" alt="Villager">
                     </div>
                     <div class="card-body flex-grow-4">
                                     <h5 class="card-title text-center">${v.species}</h5>
@@ -88,7 +108,6 @@
                     </div>
                 </div>
                 `;
-
 
             });
         };
