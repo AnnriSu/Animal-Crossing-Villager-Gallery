@@ -36,6 +36,14 @@ body {
   background-color: rgba(78, 133, 244, 0.337);
 }
 
+.content-container {
+  background-color: rgba(78, 133, 244, 0.093);
+}
+
+.pagination-container {
+  background-color: rgba(78, 133, 244, 0.337);
+}
+
 h1, h2, h3, h4, h5, h6 {
   color: rgb(255, 208, 0);
   text-shadow: 2px 2px 4px #160048a3;
