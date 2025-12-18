@@ -1,0 +1,47 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Jersey+25&display=swap');
+
+html, body, * {
+   font-family: "Jersey 25", sans-serif;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: url("../assets/img/Background2.png") center / cover no-repeat fixed;
+}
+
+.navbar {
+  background-color: rgba(78, 133, 244, 0.337);
+  
+  
+}
+
+.navbar .nav-link {
+  color: rgb(240, 255, 194);
+}
+
+.navbar-toggler {
+  border-color: rgba(175, 255, 240, 0.5);
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(175, 255, 240, 0.5)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='3' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+.introduction-container {
+  background-color: rgba(78, 133, 244, 0.337);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: rgb(255, 208, 0);
+  text-shadow: 2px 2px 4px #160048a3;
+  
+}
+
+.border-3 {
+  border-color: rgb(107, 185, 238) !important;
+}
