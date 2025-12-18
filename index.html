@@ -32,7 +32,7 @@
             <div class="collapse navbar-collapse ms-4" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link"  href="search.html">Search For Villagers</a>
+                        <a class="nav-link" href="search.html">Search For Villagers</a>
                     </li>
                 </ul>
             </div>
@@ -50,6 +50,37 @@
         <div class="row" id="contentArea">
         </div>
     </div>
+
+    <div class=" container pagaination-container mt-3 mb-3 pt-4 pb-2 border border-3 shadow rounded-3" id="pagaination">
+
+        <div class="row">
+            <div class="col">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" id="prevBtn">
+                            <a class="page-link" aria-label="Previous" onclick="prevPage()">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+
+                        <li class="page-item" id="pageText"><a class="page-link">1</a>
+                        </li>
+
+                        <li class="page-item">
+                            <a class="page-link" aria-label="Next" onclick="nextPage()">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+        </div>
+
+
+    </div>
+
 
     <footer class="text-center text-lg-start mt-4">
         <div class="text-center p-3">
@@ -73,46 +104,87 @@
 
     <script>
         const contentArea = document.getElementById("contentArea");
+        const pageText = document.getElementById("pageText");
+        const prevBtn = document.getElementById("prevBtn");
 
-        const getVillagers = async () => {
-            const response = await fetch("https://api.nookipedia.com/villagers", {
-                method: "GET",
-                headers: {
-                    "X-API-KEY": "0dbad51e-9757-4c1f-8a0e-6e94218536d2",
-                    "Accept-Version": "1.0.0"
-                }
-            });
+        var page = 1;
 
-            if (!response.ok) {
-                console.error("Error:", response.status);
-                return;
+        function prevPage() {
+            if (page > 1) {
+                page--;
+                pageText.innerHTML = `<a class="page-link">${page}</a>`;
+                contentArea.innerHTML = "";
+                getVillagers();
             }
+            updatePaginationButtons();
+        }
 
-            const villagers = await response.json();
+        function nextPage() {
+            page++;
+            pageText.innerHTML = `<a class="page-link">${page}</a>`;
+            contentArea.innerHTML = "";
+            getVillagers();
+            updatePaginationButtons();
+        }
 
-            villagers.slice(0, 20).forEach(v => {
-                contentArea.innerHTML +=
-                    `
-                <div class=" col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 p-3  text-center">
-                <div class="card h-100 shadow rounded-3" style="background-color: ${personalityColors[v.personality.toLowerCase()] || '#FFFFFF'};">
-                    <h2 class="mt-2">${v.name}</h2>
-                    <div class="mx-auto overflow-hidden">
-                        <img src="${v.image_url}" width="auto" height="150" alt="Villager">
-                    </div>
-                    <div class="card-body flex-grow-4">
-                                    <h5 class="card-title text-center">${v.species}</h5>
-                                    <p class="card-text text-center">
-                                    ${v.personality}
-                                    </p>
-                                </div> 
-                    </div>
+        function updatePaginationButtons() {
+            // Disable prev button if on page 1
+            if (page <= 1) {
+                prevBtn.classList.add("disabled");
+            } else {
+                prevBtn.classList.remove("disabled");
+            }
+        }
+
+            const getVillagers = async () => {
+                const response = await fetch(`https://api.nookipedia.com/villagers`, {
+                    method: "GET",
+                    headers: {
+                        "X-API-KEY": "0dbad51e-9757-4c1f-8a0e-6e94218536d2",
+                        "Accept-Version": "1.0.0"
+                    }
+                });
+
+                if (!response.ok) {
+                    console.error("Error:", response.status);
+                    return;
+                }
+
+                const villagers = await response.json();
+
+                contentArea.innerHTML = ""; // clear previous content
+
+                const perPage = 8;
+                const startIndex = (page - 1) * perPage;
+                const endIndex = startIndex + perPage;
+
+                villagers.slice(startIndex, endIndex).forEach(v => {
+                    contentArea.innerHTML +=
+                        `
+        <div class=" col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 p-3 text-center">
+            <div class="card h-100 shadow rounded-3" style="background-color: ${personalityColors[v.personality.toLowerCase()] || '#FFFFFF'};">
+                <h2 class="mt-2">${v.name}</h2>
+                <div class="mx-auto overflow-hidden">
+                    <img src="${v.image_url}" width="auto" height="150" alt="Villager">
                 </div>
-                `;
+                <div class="card-body flex-grow-4">
+                    <h5 class="card-title text-center">${v.species}</h5>
+                    <p class="card-text text-center">${v.personality}</p>
+                </div> 
+            </div>
+        </div>
+        `;
+                });
 
-            });
-        };
+                pageText.innerHTML = `<a class="page-link">${page}</a>`;
+            };
 
-        getVillagers();
+
+
+
+            getVillagers();
+
+            updatePaginationButtons();
     </script>
 
 
